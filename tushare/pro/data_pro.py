@@ -18,14 +18,17 @@ FREQS = {'D': '1DAY',
          }
 
 
-def pro_api(token=''):
+def pro_api(token='', async_mode=False):
     """
     初始化pro API,第一次可以通过ts.set_token('your token')来记录自己的token凭证，临时token可以通过本参数传入
     """
     if token == '' or token is None:
         token = upass.get_token()
     if token is not None and token != '':
-        pro = client.DataApi(token)
+        if async_mode:
+            pro = client.AsyncDataApi(token)
+        else:
+            pro = client.DataApi(token)
         return pro
     else:
         raise Exception('api init error.') 
